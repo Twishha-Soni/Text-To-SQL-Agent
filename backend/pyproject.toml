@@ -9,4 +9,6 @@ dependencies = [
     "psycopg2-binary>=2.9",
     "pandas>=2.2",
     "python-dotenv>=1.0",
+    "voyageai>=0.3",
+    "qdrant-client>=1.9",
 ]
