@@ -4,15 +4,15 @@ from pathlib import Path
 from typing import Any
 
 import psycopg2
-from psycopg2.extras import execute_values #type: ignore
+from psycopg2.extras import execute_values 
 from dotenv import load_dotenv
 
 load_dotenv()
 
 DATA_DIR = Path(__file__).parent.parent / 'data'
 
-CONN_PARAMS: dict[str, Any] = {
-    'host': os.getenv('POSTGRES_HOST', 'postgres'),
+CONN_PARAMS = {
+    'host': os.getenv('POSTGRES_HOST', 'localhost'),
     'port': os.getenv('POSTGRES_PORT', '5432'),
     'dbname': os.getenv('POSTGRES_DB'),
     'user': os.getenv('POSTGRES_USER'),

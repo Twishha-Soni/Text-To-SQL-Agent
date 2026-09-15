@@ -7,8 +7,8 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 import voyageai
 
-from rag.business_rules_docs import BUSINESS_RULES_DOCS
-from rag.schema_docs import SCHEMA_DOCS
+from service.rag.business_rules_docs import BUSINESS_RULES_DOCS
+from service.rag.schema_docs import SCHEMA_DOCS
 
 load_dotenv()
 

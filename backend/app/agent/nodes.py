@@ -1,8 +1,8 @@
 from agent.state import AgentState
-from rag.generate import generate_sql
-from rag.retrieve import retrieve_context
-
-MAX_RETRIES = 3
+from service.execute import execute_sql
+from service.validate import validate_sql
+from service.rag.generate import generate_sql
+from service.rag.retrieve import retrieve_context
 
 def retrieve(state: AgentState) -> dict:
     print("[RETRIEVE]")
@@ -18,13 +18,20 @@ def generate(state: AgentState) -> dict:
 
 def validate(state: AgentState) -> dict:
     print("[VALIDATE]")
-    # stub: force failure once so we can prove the retry loop works
-    is_valid = state["retry_count"] >= 1
-    return {"is_valid": is_valid, "validation_error": None if is_valid else "stub failure"}
+
+    is_valid, validation_error = validate_sql(state['sql_query'])
+
+    return {"is_valid": is_valid, "validation_error": validation_error}
 
 def execute(state: AgentState) -> dict:
     print("[EXECUTE]")
-    return {"query_result": [{"stub": "row"}]}
+
+    result, error = execute_sql(state['sql_query'])
+
+    if error:
+        return {'query_result': None, 'validaton_error': error}
+
+    return {"query_result": result, 'validation_error': None}
 
 def correct(state: AgentState) -> dict:
     print("[CORRECT]")
