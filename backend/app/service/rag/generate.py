@@ -22,8 +22,9 @@ Rules:
 - Only use tables/columns described in the schema context below.
 - Apply the business rules exactly as stated — they encode judgment calls that are not obvious from the schema alone.
 - Never use DROP, DELETE, UPDATE, INSERT, ALTER, or TRUNCATE.
+- If the question CANNOT be answered using only the given schema and rules (e.g. it needs a table or column that doesn't exist), set can_answer to false and leave sql_query as an empty string. Do NOT write a workaround query that returns a text message instead of real data.
 - Respond ONLY with a JSON object matching this shape:
-  "sql_query": "...", "reasoning": "..."
+  "can_answewr": "...", sql_query": "...", "reasoning": "..."
 """),
     ('human', "{result_block}")
 ])

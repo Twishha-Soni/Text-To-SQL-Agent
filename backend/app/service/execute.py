@@ -24,9 +24,7 @@ def execute_sql(sql: str) -> tuple[list[dict] | None, str | None]:
             cur.execute(f"SET statement_timeout = {QUERY_TIMEOUT_SECONDS}")
             cur.execute(sql)
             columns = [desc[0] for desc in cur.description]
-            print(f"\n\n col: {columns}")
             rows = cur.fetchmany(QUERY_ROW_LIMIT)
-            print(f"\n\n row: {rows}")
             result = [dict(zip(columns, row)) for row in rows]
 
         conn.close()

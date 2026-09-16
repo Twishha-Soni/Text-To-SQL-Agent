@@ -3,7 +3,9 @@ from agent.graph import build_graph
 graph = build_graph()
 
 result = graph.invoke({
-    'question': 'What is our on-time delivery rate?',
+    'question': 'What is our on time delivery rate?',
+    'schema_context': None,
+    'rules_context': None,
     'sql_query': '',
     'is_valid': False,
     'validation_error': None,
