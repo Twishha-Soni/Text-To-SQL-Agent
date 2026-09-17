@@ -1,7 +1,14 @@
 from langgraph.graph import END, START, StateGraph
 
 from app.agent.state import AgentState
-from app.agent.nodes import clarify, correct, execute, explain, generate, retrieve, validate
+from app.agent.nodes.retrieve import retrieve
+from app.agent.nodes.generate import generate
+from app.agent.nodes.validate import validate
+from app.agent.nodes.execute import execute
+from app.agent.nodes.correct import correct
+from app.agent.nodes.clarify import clarify
+from app.agent.nodes.explain import explain
+
 from app.agent.routing import route_after_correct, route_after_execute, route_after_generate, route_after_validate
 
 
@@ -38,3 +45,5 @@ def build_graph():
     workflow.add_edge('clarify', END)
 
     return workflow.compile()
+
+graph = build_graph()

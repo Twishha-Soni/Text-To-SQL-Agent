@@ -3,12 +3,11 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.auth.dependecies import get_current_user
-from app.agent.graph import build_graph
+from app.agent.graph import graph
 from app.database.models import Users_Agent
 from app.database.session import get_db
 
 router = APIRouter(tags=['ask agent'])
-graph = build_graph()
 
 class QuestionRequest(BaseModel):
     question: str
@@ -41,6 +40,8 @@ def ask_agent(
     current_user: Users_Agent = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
+    
+    
     try:
         result = graph.invoke(fresh_state(payload.question))
     except Exception as e:
