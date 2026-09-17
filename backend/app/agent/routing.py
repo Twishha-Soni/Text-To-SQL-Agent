@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from agent.state import AgentState
+from app.agent.state import AgentState
 
 load_dotenv()
 

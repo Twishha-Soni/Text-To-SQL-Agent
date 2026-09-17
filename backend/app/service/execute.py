@@ -2,18 +2,12 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
+from app.db.connect import CONN_PARAMS
+
 load_dotenv()
 
 QUERY_TIMEOUT_SECONDS = int(int(os.getenv('QUERY_TIMEOUT_SECONDS')) * 1000)
 QUERY_ROW_LIMIT = int(os.getenv('QUERY_ROW_LIMIT'))
-
-CONN_PARAMS = {
-    'host': os.getenv('POSTGRES_HOST', 'localhost'),
-    'port': int(os.getenv('POSTGRES_PORT')),
-    'dbname': os.getenv('POSTGRES_DB'),
-    'user': os.getenv('POSTGRES_USER'),
-    'password': os.getenv('POSTGRES_PASSWORD')
-}
 
 def execute_sql(sql: str) -> tuple[list[dict] | None, str | None]:
     try:
@@ -32,8 +26,3 @@ def execute_sql(sql: str) -> tuple[list[dict] | None, str | None]:
     
     except Exception as e:
         return None, str(e)
-
-if __name__ == "__main__":
-    result, error = execute_sql('SELECT * FROM orders;')
-    print(f"error: {error}")
-    print(f"\n\n results: \n{result}")

@@ -3,28 +3,24 @@ from typing import Any
 import uuid
 
 from dotenv import load_dotenv
-from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
-import voyageai
 
-from service.rag.business_rules_docs import BUSINESS_RULES_DOCS
-from service.rag.schema_docs import SCHEMA_DOCS
+from app.service.rag.business_rules_docs import BUSINESS_RULES_DOCS
+from app.service.rag.schema_docs import SCHEMA_DOCS
+from app.db.connect import vo_client, qdrant_db_client
 
 load_dotenv()
 
 VOYAGE_MODEL = os.getenv('VOYAGE_MODEL')
 EMBED_DIM: Any = os.getenv('EMBEDDING_DIMENSION')
 
-vo_client = voyageai.Client(api_key=os.getenv('VOYAGE_API_KEY')) # type: ignore
-qdrant = QdrantClient(url=os.getenv('QDRANT_URL', 'http://localhost:6333'))
-
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
-    result = vo_client.embed(texts, model=VOYAGE_MODEL, input_type='document')
+    result = vo_client().embed(texts, model=VOYAGE_MODEL, input_type='document')
     return result.embeddings
 
 def ingest_collection(collection_name: str, docs: list[dict]):
-    qdrant.recreate_collection(
+    qdrant_db_client().recreate_collection(
         collection_name=collection_name,
         vectors_config=VectorParams(size=EMBED_DIM, distance=Distance.COSINE)
     )
@@ -45,7 +41,7 @@ def ingest_collection(collection_name: str, docs: list[dict]):
         for doc, vector in zip(docs, vectors)
     ]
 
-    qdrant.upsert(collection_name=collection_name, points=points)
+    qdrant_db_client().upsert(collection_name=collection_name, points=points)
     print(f"  ingested {len(points)} docs into '{collection_name}'")
 
 def main():

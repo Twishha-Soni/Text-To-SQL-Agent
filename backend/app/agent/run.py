@@ -1,6 +1,6 @@
 import time
 
-from agent.graph import build_graph
+from app.agent.graph import build_graph
 
 graph = build_graph()
 

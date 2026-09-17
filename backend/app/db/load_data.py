@@ -7,17 +7,11 @@ import psycopg2
 from psycopg2.extras import execute_values 
 from dotenv import load_dotenv
 
+from db.connect import CONN_PARAMS
+
 load_dotenv()
 
 DATA_DIR = Path(__file__).parent.parent / 'data'
-
-CONN_PARAMS = {
-    'host': os.getenv('POSTGRES_HOST', 'localhost'),
-    'port': os.getenv('POSTGRES_PORT', '5432'),
-    'dbname': os.getenv('POSTGRES_DB'),
-    'user': os.getenv('POSTGRES_USER'),
-    'password': os.getenv('POSTGRES_PASSWORD')
-}
 
 def clean_value(value: str | None):
     if value is None or value == "":

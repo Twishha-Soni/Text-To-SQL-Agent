@@ -1,8 +1,8 @@
 from langgraph.graph import END, START, StateGraph
 
-from agent.state import AgentState
-from agent.nodes import clarify, correct, execute, explain, generate, retrieve, validate
-from agent.routing import route_after_correct, route_after_execute, route_after_generate, route_after_validate
+from app.agent.state import AgentState
+from app.agent.nodes import clarify, correct, execute, explain, generate, retrieve, validate
+from app.agent.routing import route_after_correct, route_after_execute, route_after_generate, route_after_validate
 
 
 def build_graph():

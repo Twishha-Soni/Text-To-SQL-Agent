@@ -1,9 +1,9 @@
-from agent.state import AgentState
-from service.explain import explain_result
-from service.execute import execute_sql
-from service.validate import validate_sql
-from service.rag.generate import generate_sql
-from service.rag.retrieve import retrieve_context
+from app.agent.state import AgentState
+from app.service.explain import explain_result
+from app.service.execute import execute_sql
+from app.service.validate import validate_sql
+from app.service.rag.generate import generate_sql
+from app.service.rag.retrieve import retrieve_context
 
 def retrieve(state: AgentState) -> dict:
     print("[RETRIEVE]")
