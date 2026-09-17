@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 from app.auth.dependecies import get_current_user
 from app.agent.graph import build_graph
-from app.db.models import Users_Texttosql_App
-from app.db.session import get_db
+from app.database.models import Users_Agent
+from app.database.session import get_db
 
 router = APIRouter(tags=['ask agent'])
 graph = build_graph()
@@ -38,8 +38,8 @@ def fresh_state(question: str) -> dict:
 @router.post("/ask", response_model=AnswerResponse)
 def ask_agent(
     payload: QuestionRequest,
-    # current_user: Users_Texttosql_App = Depends(get_current_user),
-    # db: Session = Depends(get_db)
+    current_user: Users_Agent = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ):
     try:
         result = graph.invoke(fresh_state(payload.question))

@@ -2,7 +2,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
-from app.db.connect import CONN_PARAMS
+from app.database.connect import CONN_PARAMS
 
 load_dotenv()
 

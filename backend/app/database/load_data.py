@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2.extras import execute_values 
 from dotenv import load_dotenv
 
-from db.connect import CONN_PARAMS
+from database.connect import CONN_PARAMS
 
 load_dotenv()
 

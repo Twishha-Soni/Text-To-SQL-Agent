@@ -7,8 +7,8 @@ from sqlalchemy.orm import Session
 
 from app.auth.hashing import verify_password
 from app.auth.jwt import create_access_token
-from app.db.models import Users_Texttosql_App
-from app.db.session import get_db
+from app.database.models import Users_Agent
+from app.database.session import get_db
 
 router = APIRouter(tags=['login'])
 
@@ -18,10 +18,11 @@ class TokenResponse(BaseModel):
 
 @router.post("/login", response_model=TokenResponse)
 def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)):
-    user = db.query(Users_Texttosql_App).filter(Users_Texttosql_App.username == form_data.username).first()
+    user = db.query(Users_Agent).filter(Users_Agent.username == form_data.username).first()
 
     verified, updated_hash_pass = verify_password(form_data.password, user.hashed_password)
-
+    print(verified)
+    
     if not user or not verified:
         raise HTTPException(status_code=401, detail='Invalid username or password')
 

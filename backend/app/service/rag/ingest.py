@@ -7,7 +7,7 @@ from qdrant_client.models import Distance, PointStruct, VectorParams
 
 from app.service.rag.business_rules_docs import BUSINESS_RULES_DOCS
 from app.service.rag.schema_docs import SCHEMA_DOCS
-from app.db.connect import vo_client, qdrant_db_client
+from app.database.connect import vo_client, qdrant_db_client
 
 load_dotenv()
 

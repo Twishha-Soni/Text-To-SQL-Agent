@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.auth.hashing import hash_password
-from app.db.models import Users_Texttosql_App
-from app.db.session import get_db
+from app.database.models import Users_Agent
+from app.database.session import get_db
 
 router = APIRouter(tags=['register'])
 
@@ -23,12 +23,12 @@ class UserOut(BaseModel):
 
 @router.post("/register", response_model=UserOut)
 def register(payload: UserCreate, db: Session = Depends(get_db)):
-    existing = db.query(Users_Texttosql_App).filter(Users_Texttosql_App.username == payload.username).first()
+    existing = db.query(Users_Agent).filter(Users_Agent.username == payload.username).first()
 
     if existing:
         raise HTTPException(status_code=400, detail='Username already taken.')
 
-    new_user = Users_Texttosql_App(
+    new_user = Users_Agent(
         username=payload.username,
         hashed_password=hash_password(payload.password)
     )

@@ -4,8 +4,8 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from app.auth.jwt import decode_access_token
-from app.db.models import Users_Texttosql_App
-from app.db.session import get_db
+from app.database.models import Users_Agent
+from app.database.session import get_db
 
 CREDENTIALS_ERROR = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -15,7 +15,7 @@ CREDENTIALS_ERROR = HTTPException(
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl='/login')
 
-def get_current_user(token: str = Depends(oauth2_schema), db: Session = Depends(get_db)) -> Users_Texttosql_App:
+def get_current_user(token: str = Depends(oauth2_schema), db: Session = Depends(get_db)) -> Users_Agent:
     payload = decode_access_token(token)
     if payload is None:
         raise CREDENTIALS_ERROR
@@ -24,7 +24,7 @@ def get_current_user(token: str = Depends(oauth2_schema), db: Session = Depends(
     if user_id is None:
         raise CREDENTIALS_ERROR
 
-    user = db.query(Users_Texttosql_App).filter(Users_Texttosql_App.id == int(user_id)).first()
+    user = db.query(Users_Agent).filter(Users_Agent.id == int(user_id)).first()
     if user is None:
         return CREDENTIALS_ERROR
 

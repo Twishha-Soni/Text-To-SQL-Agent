@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from app.db.connect import vo_client, qdrant_db_client
+from app.database.connect import vo_client, qdrant_db_client
 
 load_dotenv()
 
