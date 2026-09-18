@@ -1,7 +1,7 @@
 import time
 import asyncio
 import redis
-from backend.app.api.rate_limit.rate_limiter import SlidingWindowRateLimiter
+from backend.app.api.rate_limit.limiter import SlidingWindowRateLimiter
 
 r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 limiter = SlidingWindowRateLimiter(r, limit=5, window_seconds=10)

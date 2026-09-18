@@ -3,19 +3,19 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.auth.dependecies import get_current_user
-from app.agent.graph import build_graph
+from backend.app.sub_agent_1.graph import graph
 from app.database.models import Users_Agent
 from app.database.session import get_db
+from app.api.rate_limit.dependencies import rate_limit
 
 router = APIRouter(tags=['ask agent'])
-graph = build_graph()
 
 class QuestionRequest(BaseModel):
     question: str
 
 class AnswerResponse(BaseModel):
     question: str
-    sql_query: str
+    sql_query: str = None
     final_answer: str
     retry_count: int
     can_answer: bool
@@ -38,9 +38,12 @@ def fresh_state(question: str) -> dict:
 @router.post("/ask", response_model=AnswerResponse)
 def ask_agent(
     payload: QuestionRequest,
-    current_user: Users_Agent = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: Users_Agent = Depends(rate_limit),
+    db: Session = Depends(get_db),
+
 ):
+    
+    
     try:
         result = graph.invoke(fresh_state(payload.question))
     except Exception as e:

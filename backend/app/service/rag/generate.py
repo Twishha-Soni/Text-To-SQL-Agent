@@ -4,7 +4,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 import os
 
-from app.agent.schemas import SQLGenerationResponse
+from backend.app.agent.sub_agent_1.schemas import SQLGenerationResponse
 
 load_dotenv()
 
