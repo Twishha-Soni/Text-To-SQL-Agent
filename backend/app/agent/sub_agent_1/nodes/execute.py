@@ -1,8 +1,8 @@
-from app.agent.state import AgentState
-from app.service.execute import execute_sql
+from app.agent.sub_agent_1.state import SubGraphAgentState
+from app.service.sub_agent_1.execute import execute_sql
 
 
-def execute(state: AgentState) -> dict:
+def execute(state: SubGraphAgentState) -> dict:
     print("[EXECUTE]")
 
     result, error = execute_sql(state['sql_query'])

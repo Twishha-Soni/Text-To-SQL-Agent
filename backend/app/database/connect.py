@@ -6,7 +6,7 @@ import voyageai
 
 CONN_PARAMS = {
     'host': os.getenv('POSTGRES_HOST', 'localhost'),
-    'port': int(os.getenv('POSTGRES_PORT')),
+    'port': int(os.getenv('POSTGRES_PORT', 5432)),
     'dbname': os.getenv('POSTGRES_DB'),
     'user': os.getenv('POSTGRES_USER'),
     'password': os.getenv('POSTGRES_PASSWORD')
