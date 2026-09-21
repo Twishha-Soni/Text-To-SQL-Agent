@@ -1,8 +1,8 @@
-from app.agent.state import AgentState
-from app.service.rag.generate import generate_sql
+from app.agent.sub_agent_1.state import SubGraphAgentState
+from app.service.sub_agent_1.rag.generate import generate_sql
 
 
-def generate(state: AgentState) -> dict:
+def generate(state: SubGraphAgentState) -> dict:
     print("[GENERATE]")
     result = generate_sql(state['question'], state['schema_context'], state['rules_context'])
     if result:

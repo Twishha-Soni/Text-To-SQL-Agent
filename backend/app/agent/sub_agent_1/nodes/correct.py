@@ -1,8 +1,8 @@
-from app.agent.state import AgentState
-from app.service.rag.generate import generate_sql
+from app.agent.sub_agent_1.state import SubGraphAgentState
+from app.service.sub_agent_1.rag.generate import generate_sql
 
 
-def correct(state: AgentState) -> dict:
+def correct(state: SubGraphAgentState) -> dict:
     if state['retry_count'] + 1 > 3:
         return {'retry_count': state['retry_count'] + 1}
     

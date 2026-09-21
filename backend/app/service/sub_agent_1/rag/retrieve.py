@@ -1,3 +1,4 @@
+import json
 import os
 from dotenv import load_dotenv
 from app.database.connect import vo_client, qdrant_db_client
@@ -6,7 +7,6 @@ load_dotenv()
 
 VOYAGE_MODEL = os.getenv('VOYAGE_MODEL')
 TOP_K = 3
-
 
 def embed_query(text: str) -> list[float]:
     result = vo_client().embed([text], model=VOYAGE_MODEL, input_type='query')

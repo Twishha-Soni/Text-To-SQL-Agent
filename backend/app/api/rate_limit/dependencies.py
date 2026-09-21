@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException
 
-from app.api.rate_limit.limiter import SlidingWindowRateLimiter
+from app.api.rate_limit.rate_limiter import SlidingWindowRateLimiter
 from app.api.rate_limit.client import redis_client
 from app.auth.dependecies import get_current_user
 from app.database.models import Users_Agent

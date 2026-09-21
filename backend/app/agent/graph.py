@@ -1,49 +1,23 @@
 from langgraph.graph import END, START, StateGraph
 
+from app.agent.nodes.head import head
+from app.agent.nodes.sub_agent import sub_agent_node
 from app.agent.state import AgentState
-from app.agent.nodes.retrieve import retrieve
-from app.agent.nodes.generate import generate
-from app.agent.nodes.validate import validate
-from app.agent.nodes.execute import execute
-from app.agent.nodes.correct import correct
-from app.agent.nodes.clarify import clarify
-from app.agent.nodes.explain import explain
-
-from app.agent.routing import route_after_correct, route_after_execute, route_after_generate, route_after_validate
 
 
 def build_graph():
     workflow = StateGraph(AgentState)
 
     # add nodes
-    workflow.add_node('retrieve', retrieve)
-    workflow.add_node('generate', generate)
-    workflow.add_node('validate', validate)
-    workflow.add_node('execute', execute)
-    workflow.add_node('correct', correct)
-    workflow.add_node('clarify', clarify)
-    workflow.add_node('explain', explain)
+    workflow.add_node("head", head)
+    workflow.add_node("sub_agent_node", sub_agent_node)
 
     # set edges
-    workflow.add_edge(START, 'retrieve')
-    workflow.add_edge('retrieve', 'generate')
-
-    workflow.add_conditional_edges(
-        'generate', route_after_generate, {'validate': 'validate', 'clarify': 'clarify'}
-    )
-    workflow.add_conditional_edges(
-        'validate', route_after_validate, {'execute': 'execute', 'correct': 'correct'}
-    )
-    workflow.add_conditional_edges(
-        'execute', route_after_execute, {'explain': 'explain', 'correct': 'correct'}
-    )
-    workflow.add_conditional_edges(
-        'correct', route_after_correct, {'validate': 'validate', 'clarify': 'clarify'}
-    )
-
-    workflow.add_edge('explain', END)
-    workflow.add_edge('clarify', END)
+    workflow.add_edge(START, "head")
+    workflow.add_edge("head", "sub_agent_node")
+    workflow.add_edge("sub_agent_node", END)
 
     return workflow.compile()
 
-graph = build_graph()
+
+agent = build_graph()

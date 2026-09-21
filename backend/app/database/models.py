@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import DateTime, ForeignKey, String, Text, func
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 class Base(DeclarativeBase):
@@ -22,7 +23,7 @@ class Chats_Agent(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('users_agent.id'))
     name: Mapped[str] = mapped_column(String(50), index=True)
-    content: Mapped[str] = mapped_column(Text)
+    content: Mapped[str] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     last_updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 

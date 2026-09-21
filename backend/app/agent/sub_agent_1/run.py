@@ -1,8 +1,7 @@
 import time
 
-from app.agent.graph import build_graph
+from backend.app.agent.sub_agent_1.graph import sub_agent
 
-graph = build_graph()
 
 TEST_QUESTIONS = [
     "What is our on-time delivery rate?",                      # happy path
@@ -30,7 +29,7 @@ def fresh_state(question: str) -> dict:
 for i, q in enumerate(TEST_QUESTIONS, start=1):
     print(f"\n{'='*60}\nQ{i}: {q}\n{'='*60}")
     time.sleep(30)
-    result = graph.invoke(fresh_state(q))
+    result = sub_agent.invoke(fresh_state(q))
     print(f"SQL: {result['sql_query']}")
     print(f"RETRIES: {result['retry_count']}")
     print(f"ANSWER: {result['final_answer']}")
