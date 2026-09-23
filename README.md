@@ -2,4 +2,4 @@
 
 
 ## Architecture
-<img width="2481" height="820" alt="Workflow" src="https://github.com/user-attachments/assets/d3233832-cfbe-4d8a-8aaa-f510b383b3e8" />
+<img width="2481" height="820" alt="Workflow" src="https://github.com/user-attachments/assets/4bf927df-6d8e-44d3-a39b-58b4f70a4931" />
