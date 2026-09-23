@@ -10,7 +10,7 @@ from app.database.models import Chats_Agent, Users_Agent
 from app.database.session import get_db
 from app.api.rate_limit.dependencies import rate_limit
 
-router = APIRouter(tags=['ask agent'])
+router = APIRouter(prefix= "/ask", tags=['ask agent'])
 
 class QuestionRequest(BaseModel):
     question: str
@@ -27,7 +27,7 @@ def fresh_state(messages: str) -> dict:
         "messages": messages,
     }
 
-@router.post("/ask/new_chat", response_model=AnswerResponse)
+@router.post("/new_chat", response_model=AnswerResponse)
 def ask_agent_new_chat(
     payload: QuestionRequest,
     current_user: Users_Agent = Depends(rate_limit),
@@ -64,7 +64,7 @@ def ask_agent_new_chat(
 
 
 
-@router.post("/ask/{thread_id}", response_model=AnswerResponse)
+@router.post("/{thread_id}", response_model=AnswerResponse)
 def ask_agent(
     thread_id: int,
     payload: QuestionRequest,
@@ -84,9 +84,6 @@ def ask_agent(
             status_code=404,
             detail="Chat not found."
         )
-
-    if content:
-        print(content)
 
     try:
         result = agent.invoke(fresh_state(content))
