@@ -45,7 +45,7 @@ def ask_agent_new_chat(
 
     new_chat = Chats_Agent(
         user_id=current_user.id,
-        name=payload.question,
+        name=payload.question[:49],
         content=messages_to_dict(content),
         last_updated_at = datetime.now()
     )
