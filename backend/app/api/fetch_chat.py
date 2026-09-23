@@ -14,7 +14,7 @@ class ChatSchema(BaseModel):
     id: int
     user_id: int
     name: str
-    content: dict[str, Any]
+    content: list[dict]
     created_at: datetime
     last_updated_at: datetime
 
